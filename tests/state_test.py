@@ -210,6 +210,22 @@ def t_atomic_write_leaves_no_temp_files():
     assert not leftovers, f"temp files left behind: {leftovers}"
 
 
+@case
+def t_compatible_with_stock_macos_bash_3_2():
+    """no bash-4-only builtin survives in code: the shebang's bash is 3.2 on macOS"""
+    # $BASHPID and $BASH_SUBSHELL were added in bash 4.0. /bin/bash is 3.2.57
+    # on every Mac, and `set -u` turns a reference to either into a fatal
+    # "unbound variable" — which is exactly what crashed `state.sh init`
+    # before mypid replaced them. Comment lines are excluded so the fix's own
+    # explanation of WHY it exists cannot trip the check.
+    code = "\n".join(
+        line for line in STATE.read_text().splitlines()
+        if not line.lstrip().startswith("#")
+    )
+    assert "$BASHPID" not in code, "$BASHPID needs bash 4+; macOS ships bash 3.2"
+    assert "BASH_SUBSHELL" not in code, "BASH_SUBSHELL needs bash 4+"
+
+
 def main():
     fails = 0
     for name, fn in CASES:
