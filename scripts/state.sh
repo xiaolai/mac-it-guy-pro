@@ -42,6 +42,15 @@ STARTUP_GRACE=3       # never judge an owner dead before its pid is settled
 
 die() { echo "state.sh: $1" >&2; exit "${2:-1}"; }
 
+# $BASHPID exists only in bash 4+; macOS ships bash 3.2. mypid returns the PID
+# of the CURRENT (sub)shell the way BASHPID does: run inside `$(...)`, the
+# forked child `exec`s `sh`, whose parent is whichever shell issued the
+# substitution — the main shell at top level, or the subshell when a command
+# substitution's inherited EXIT trap fires. `exec` also strips the inherited
+# trap from that child, so it cannot re-enter lock_release. Only call it
+# inside a command substitution.
+mypid() { exec sh -c 'echo "$PPID"'; }
+
 # ---------------------------------------------------------------- locking --
 lock_acquire() {
   mkdir -p "$ROOT" 2>/dev/null || die "cannot create $ROOT"
@@ -76,7 +85,7 @@ lock_acquire() {
     sleep 0.1
   done
   echo $$ > "$LOCK/pid"
-  LOCK_OWNER=$BASHPID
+  LOCK_OWNER=$(mypid)
   trap 'lock_release' EXIT INT TERM
 }
 
@@ -87,10 +96,10 @@ lock_acquire() {
 # returned — dropping the lock while the caller believed it still held one.
 # Concurrent writers then interleaved and lost updates, which is exactly the
 # failure this file exists to prevent. $$ is unusable here because bash keeps
-# it pointing at the original shell inside a subshell; $BASHPID does not.
+# it pointing at the original shell inside a subshell; mypid does not.
 LOCK_OWNER=""
 lock_release() {
-  [ -n "$LOCK_OWNER" ] && [ "$BASHPID" = "$LOCK_OWNER" ] && rm -rf "$LOCK" 2>/dev/null
+  [ -n "$LOCK_OWNER" ] && [ "$(mypid)" = "$LOCK_OWNER" ] && rm -rf "$LOCK" 2>/dev/null
   return 0
 }
 
