@@ -1,6 +1,7 @@
 ---
 name: toolsmith
-description: Builds toolbox micro-tools from a clarified chore specification — writes the script, plain-language README, and double-clickable wrapper under ~/ITGuy/toolbox/, tests the dry-run on real files, and registers the tool. Also handles tool upgrades (script → CLI → scheduled). Use for automate and toolbox-evolve workflows.
+description: |
+  Builds toolbox micro-tools from a clarified chore specification — writes the script, plain-language README, and double-clickable wrapper under ~/ITGuy/toolbox/, tests the dry-run on real files, and registers the tool. Also handles tool upgrades (script → CLI → scheduled). Use for automate and toolbox-evolve workflows.
 
   <example>
   Context: The automate command clarified a chore: "every Sunday I rename that week's scans to date-prefixed names"
@@ -17,7 +18,6 @@ description: Builds toolbox micro-tools from a clarified chore specification —
   Evolution follows the ladder in the toolbox-contract skill; the README history section records the upgrade.
   </commentary>
   </example>
-
 model: inherit
 color: blue
 tools: Read, Write, Edit, Bash

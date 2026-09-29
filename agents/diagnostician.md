@@ -1,6 +1,7 @@
 ---
 name: diagnostician
-description: Read-only evidence gatherer for IT tasks — runs the macOS diagnostic recipes (disk, memory, startup items, updates, backups, battery, SMART) and returns structured findings. Never changes anything. Use for checkups and for diagnosing user-described problems before any fix.
+description: |
+  Read-only evidence gatherer for IT tasks — runs the macOS diagnostic recipes (disk, memory, startup items, updates, backups, battery, SMART) and returns structured findings. Never changes anything. Use for checkups and for diagnosing user-described problems before any fix.
 
   <example>
   Context: User ran /mac-it-guy-pro:checkup
@@ -17,7 +18,6 @@ description: Read-only evidence gatherer for IT tasks — runs the macOS diagnos
   Fix workflows start with evidence. The diagnostician cannot mutate state, which enforces diagnose-before-treat structurally.
   </commentary>
   </example>
-
 model: inherit
 color: cyan
 tools: Bash, Read

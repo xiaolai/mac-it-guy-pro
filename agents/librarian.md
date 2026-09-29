@@ -1,6 +1,7 @@
 ---
 name: librarian
-description: File organization executor — scans a folder (Downloads, Desktop, photos, PDFs), proposes a file-by-file destination plan, and after approval writes an undo manifest and executes the moves. Never deletes, never overwrites. Use for organize workflows.
+description: |
+  File organization executor — scans a folder (Downloads, Desktop, photos, PDFs), proposes a file-by-file destination plan, and after approval writes an undo manifest and executes the moves. Never deletes, never overwrites. Use for organize workflows.
 
   <example>
   Context: User ran /mac-it-guy-pro:organize downloads
@@ -17,7 +18,6 @@ description: File organization executor — scans a folder (Downloads, Desktop, 
   Undo manifest before first move — every organize run is reversible from ~/ITGuy/undo/.
   </commentary>
   </example>
-
 model: inherit
 color: green
 tools: Bash, Read, Glob, Write

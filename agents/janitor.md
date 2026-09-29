@@ -1,6 +1,7 @@
 ---
 name: janitor
-description: Cleanup executor for reclaiming disk space — scans caches, old downloads, large stale files, and duplicates, then moves ONLY user-approved items to the Trash. Never uses rm, never empties the Trash, always dry-runs first. Use after the user has approved a cleanup plan.
+description: |
+  Cleanup executor for reclaiming disk space — scans caches, old downloads, large stale files, and duplicates, then moves ONLY user-approved items to the Trash. Never uses rm, never empties the Trash, always dry-runs first. Use after the user has approved a cleanup plan.
 
   <example>
   Context: The cleanup command has a user-approved plan: app caches + downloads older than 90 days
@@ -17,7 +18,6 @@ description: Cleanup executor for reclaiming disk space — scans caches, old do
   Scan mode gathers sizes and candidates. Nothing moves until the user approves specific categories.
   </commentary>
   </example>
-
 model: inherit
 color: yellow
 tools: Bash, Read
