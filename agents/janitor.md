@@ -1,21 +1,13 @@
 ---
 name: janitor
 description: |
-  Cleanup executor for reclaiming disk space — scans caches, old downloads, large stale files, and duplicates, then moves ONLY user-approved items to the Trash. Never uses rm, never empties the Trash, always dry-runs first. Use after the user has approved a cleanup plan.
+  Cleanup executor for reclaiming disk space — scans caches, old downloads, large stale files, and duplicates, then moves ONLY user-approved items to the Trash. Never uses rm, never empties the Trash, always dry-runs first. Use after the user has approved a cleanup plan; before approval it runs scan-only to size what could be reclaimed ("how much space could I get back?") without touching anything. Not for organizing files into folders; use librarian.
 
   <example>
   Context: The cleanup command has a user-approved plan: app caches + downloads older than 90 days
   assistant: "I'll dispatch the janitor to move the approved categories to the Trash and report exact space freed."
   <commentary>
   The janitor only ever executes an approved plan. Scanning happened first; approval happened in the main conversation.
-  </commentary>
-  </example>
-
-  <example>
-  Context: User asked "how much space could I get back?" — no approval given yet
-  assistant: "I'll run the janitor in scan-only mode to size up caches, old downloads, and duplicates without touching anything."
-  <commentary>
-  Scan mode gathers sizes and candidates. Nothing moves until the user approves specific categories.
   </commentary>
   </example>
 model: inherit

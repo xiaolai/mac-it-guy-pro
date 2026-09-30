@@ -1,21 +1,13 @@
 ---
 name: librarian
 description: |
-  File organization executor — scans a folder (Downloads, Desktop, photos, PDFs), proposes a file-by-file destination plan, and after approval writes an undo manifest and executes the moves. Never deletes, never overwrites. Use for organize workflows.
+  File organization executor — scans a folder (Downloads, Desktop, photos, PDFs), proposes a file-by-file destination plan, and after approval writes an undo manifest and executes the moves. Never deletes, never overwrites. Use for organize workflows (/mac-it-guy-pro:organize), including executing an already-approved plan. Not for reclaiming disk space or clearing caches; use janitor.
 
   <example>
   Context: User ran /mac-it-guy-pro:organize downloads
   assistant: "I'll dispatch the librarian to scan Downloads and draft a file-by-file plan — nothing moves until the plan is approved."
   <commentary>
   The librarian's first pass is always a plan. Execution is a second, separately-approved dispatch.
-  </commentary>
-  </example>
-
-  <example>
-  Context: The user approved the proposed plan for sorting scanned PDFs into invoices/contracts/papers
-  assistant: "I'll send the librarian to write the undo manifest and execute the approved moves."
-  <commentary>
-  Undo manifest before first move — every organize run is reversible from ~/ITGuy/undo/.
   </commentary>
   </example>
 model: inherit
