@@ -20,6 +20,7 @@
     "privacy"
   ],
   "skills": "./codex/skills/",
+  "commands": [],
   "hooks": "./codex/hooks.json",
   "interface": {
     "displayName": "Mac IT Guy Pro",

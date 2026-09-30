@@ -171,6 +171,19 @@ def t_codex_skills_are_real_copies_of_the_claude_skills():
 
 
 @case
+def t_codex_manifest_keeps_claude_commands_out():
+    """.codex-plugin/plugin.json must set "commands": [] and a hooks file that exists.
+    Without "commands": [], Codex 0.159.2 turns some of commands/*.md into extra
+    source-command-* skills beside the Codex port's own. The hooks path replaces
+    the root hooks/hooks.json, so it must name a file Codex can load.
+    """
+    manifest = json.loads((ROOT / ".codex-plugin" / "plugin.json").read_text())
+    assert manifest.get("commands") == [], 'set "commands": [] in .codex-plugin/plugin.json'
+    hooks = manifest.get("hooks")
+    assert hooks and (ROOT / hooks).is_file(), f"Codex hooks path {hooks!r} does not exist"
+
+
+@case
 def t_readme_test_counts_match_reality():
     """the section arguing checks must be executable must not itself be stale"""
     readme = (ROOT / "README.md").read_text()
