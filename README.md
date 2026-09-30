@@ -140,7 +140,7 @@ Ships a **Codex CLI** layout alongside the Claude Code one, and the safety rails
 | **Grok Build, opencode, Kimi CLI** | Read `codex/AGENTS.md` and the shared skills natively. Whether the guard runs depends on the runtime's hook support — the plugin says so out loud rather than assuming |
 | **Antigravity (`agy`)** | Reads the workspace skills tree; link it with `cc-suite:bridge-skills` |
 
-**The skills are symlinks, not copies**, so both builds read the same files and cannot drift apart. The one honest gap is sub-agent isolation: in Claude Code the read-only diagnostician structurally *cannot* modify anything, which is a property of the harness rather than a promise in prose. Elsewhere that becomes discipline the model must supply, and the entry skill says so explicitly instead of pretending the builds are identical.
+**The skills are byte-for-byte copies**, checked by `tests/recipes_test.py`, so both builds read the same text and cannot drift apart. They are not symlinks because Codex drops a symlinked skill directory when it installs a plugin. The one honest gap is sub-agent isolation: in Claude Code the read-only diagnostician structurally *cannot* modify anything, which is a property of the harness rather than a promise in prose. Elsewhere that becomes discipline the model must supply, and the entry skill says so explicitly instead of pretending the builds are identical.
 
 ## Why macOS only
 

@@ -144,6 +144,33 @@ def t_declared_commands_and_skills_exist():
 
 
 @case
+def t_codex_skills_are_real_copies_of_the_claude_skills():
+    """codex/skills/<n> must be a real directory identical to skills/<n>.
+    Codex 0.159.2 drops a symlinked skill directory when it installs a plugin,
+    from local and Git marketplaces alike. The Codex tree once symlinked seven
+    skills to skills/, so Codex users got the entry skill and none of the seven
+    it routes to, while every file on disk looked right.
+    """
+    problems = []
+    for d in sorted((ROOT / "codex" / "skills").iterdir()):
+        if d.is_symlink():
+            problems.append(f"{d.relative_to(ROOT)} is a symlink; Codex drops it on install")
+            continue
+        src = ROOT / "skills" / d.name
+        if not src.is_dir():
+            continue  # Codex-only skill, e.g. the mac-it-guy entry point
+        mirror = {p.relative_to(d) for p in d.rglob("*") if p.is_file()}
+        source = {p.relative_to(src) for p in src.rglob("*") if p.is_file()}
+        for rel in sorted(mirror ^ source):
+            problems.append(f"{d.name}/{rel} exists in only one of skills/ and codex/skills/")
+        for rel in sorted(mirror & source):
+            if (d / rel).read_bytes() != (src / rel).read_bytes():
+                problems.append(f"codex/skills/{d.name}/{rel} differs from skills/{d.name}/{rel}")
+    assert (ROOT / "codex" / "skills" / "it-core" / "SKILL.md").is_file(), "codex/skills/it-core is missing"
+    assert not problems, "Codex skill tree out of step:\n  " + "\n  ".join(problems)
+
+
+@case
 def t_readme_test_counts_match_reality():
     """the section arguing checks must be executable must not itself be stale"""
     readme = (ROOT / "README.md").read_text()

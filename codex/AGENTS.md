@@ -30,7 +30,7 @@ Every workflow stops if `uname` is not `Darwin`. This is not a portability gap t
 | `$tutoring` | How to explain rather than just fix, grounded in the user's own measurements. |
 | `$open-internet` | Building a personal unrestricted connection. Personal and household use only. |
 
-The skills are symlinks to the Claude Code tree, so both builds read exactly the same files and cannot drift apart.
+The seven shared skills are byte-for-byte copies of the Claude Code tree, not symlinks: Codex drops a symlinked skill directory when it installs a plugin. Edit `skills/<name>/`, then copy it over `codex/skills/<name>/`; `tests/recipes_test.py` fails while the two differ.
 
 ## No sub-agents here — supply the discipline yourself
 
