@@ -40,9 +40,9 @@ jobs:
       - name: Repo is English-only
         run: |
           python3 -c "
-          import subprocess, unicodedata
+          import os, subprocess, unicodedata
           fs = subprocess.run(['git','ls-files','-z'],capture_output=True,text=True).stdout.split('\0')
-          bad = {(ch, f) for f in filter(None, fs)
+          bad = {(ch, f) for f in fs if f and os.path.isfile(f)
                  for ch in open(f, encoding='utf-8', errors='ignore').read()
                  if ord(ch) > 127 and unicodedata.category(ch).startswith('L')
                  and 'LATIN' not in unicodedata.name(ch, '')}
