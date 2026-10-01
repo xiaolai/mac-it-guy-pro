@@ -205,3 +205,10 @@ That is a real imposition, which is why the levels above exist and why this sect
 ## License
 
 MIT
+
+## Existing personal IT setups
+
+Before onboarding, check whether the user already has a named IT agent, machine profile and runbook.
+Offer an explicit migration or use the existing authority rather than maintaining two conflicting
+profiles. Keep private credentials outside the plugin and public examples. The plugin's reusable
+consumer workflow is separate from any maintainer's private Alan installation.
